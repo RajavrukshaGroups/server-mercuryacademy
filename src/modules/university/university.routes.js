@@ -35,6 +35,11 @@ router.get(
   universityController.getUniversities,
 );
 
+router.get(
+  "/export",
+  universityController.exportUniversities
+);
+
 /**
  * Get University By ID
  */

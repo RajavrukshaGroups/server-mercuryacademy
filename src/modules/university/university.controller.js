@@ -14,6 +14,14 @@ const createUniversity = asyncHandler(async (req, res) => {
     .json(new ApiResponse(201, "University created successfully.", university));
 });
 
+const exportUniversities = asyncHandler(async (req, res) => {
+  const data = await universityService.exportUniversities(req.query);
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, "Universities exported successfully.", data));
+});
+
 /**
  * Get All Universities
  */
@@ -71,6 +79,7 @@ const deleteUniversity = asyncHandler(async (req, res) => {
 const universityController = {
   createUniversity,
   getUniversities,
+  exportUniversities,
   getUniversityById,
   updateUniversity,
   deleteUniversity,

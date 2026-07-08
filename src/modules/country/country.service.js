@@ -80,8 +80,8 @@ const getCountries = async ({
     filter.status = status;
   }
 
-  if (featured !== undefined) {
-    filter.featured = featured;
+  if (featured !== undefined && featured !== "") {
+    filter.featured = featured === "true";
   }
 
   return await baseService.paginate(Country, filter, {

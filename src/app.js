@@ -1,3 +1,4 @@
+import env from "./config/env.js";
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
@@ -18,9 +19,9 @@ app.use(helmet());
 
 app.use(
   cors({
-    origin: true,
+    origin: [env.CLIENT_URL, env.ADMIN_URL],
     credentials: true,
-  })
+  }),
 );
 
 /**

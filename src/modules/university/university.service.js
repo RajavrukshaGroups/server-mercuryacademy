@@ -54,6 +54,65 @@ const createUniversity = async (payload) => {
   return await University.create(normalizedPayload);
 };
 
+const exportUniversities = async ({
+  search = "",
+  status,
+  universityType,
+  country,
+  state,
+  city,
+  featured,
+  sortBy = "displayOrder",
+  sortOrder = "asc",
+}) => {
+  const filter = {};
+
+  if (search) {
+    filter.$or = [
+      {
+        name: {
+          $regex: search,
+          $options: "i",
+        },
+      },
+      {
+        shortName: {
+          $regex: search,
+          $options: "i",
+        },
+      },
+      {
+        code: {
+          $regex: search,
+          $options: "i",
+        },
+      },
+    ];
+  }
+
+  if (status) filter.status = status;
+
+  if (universityType) filter.universityType = universityType;
+
+  if (country) filter.country = country;
+
+  if (state) filter.state = state;
+
+  if (city) filter.city = city;
+
+  if (featured !== undefined && featured !== "") {
+    filter.featured = featured === "true";
+  }
+
+  return await University.find(filter)
+    .populate("country")
+    .populate("state")
+    .populate("city")
+    .sort({
+      [sortBy]: sortOrder === "asc" ? 1 : -1,
+    });
+};
+
 const getUniversities = async ({
   page = 1,
   limit = 10,
@@ -115,6 +174,10 @@ const getUniversities = async ({
   if (featured !== undefined) {
     filter.featured = featured;
   }
+
+  // if (featured !== undefined && featured !== "") {
+  //   filter.featured = featured === "true";
+  // }
 
   return await baseService.paginate(University, filter, {
     page,
@@ -210,6 +273,7 @@ const deleteUniversity = async (id) => {
 
 const universityService = {
   createUniversity,
+  exportUniversities,
   getUniversities,
   getUniversityById,
   updateUniversity,
