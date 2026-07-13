@@ -138,10 +138,14 @@ const leadSchema = new mongoose.Schema(
      * Assigned Counsellor
      * (Will be connected with User module later)
      */
+    // assignedTo: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "User",
+    //   default: null,
+    // },
     assignedTo: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      default: null,
+      type: String,
+      trim: true,
     },
 
     ...baseFields,
