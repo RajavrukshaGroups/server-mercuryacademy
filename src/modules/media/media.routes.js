@@ -23,7 +23,7 @@ router.post(
   "/upload",
   upload.single("file"),
   authenticate,
-  auditCreate,
+  // auditCreate,
   validateRequest(createMediaSchema),
   mediaController.uploadMedia,
 );
@@ -54,7 +54,7 @@ router.get(
 router.patch(
   "/:id",
   authenticate,
-  auditUpdate,
+  // auditUpdate,
   validateRequest(updateMediaSchema),
   mediaController.updateMedia,
 );

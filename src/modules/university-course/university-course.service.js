@@ -83,24 +83,78 @@ const getUniversityCourses = async ({
 }) => {
   const filter = {};
 
+  // if (search) {
+  //   filter.$or = [
+  //     {
+  //       eligibility: {
+  //         $regex: search,
+  //         $options: "i",
+  //       },
+  //     },
+  //     {
+  //       overview: {
+  //         $regex: search,
+  //         $options: "i",
+  //       },
+  //     },
+  //     {
+  //       degreeAwarded: {
+  //         $regex: search,
+  //         $options: "i",
+  //       },
+  //     },
+  //   ];
+  // }
+
   if (search) {
+    const regex = new RegExp(search, "i");
+
+    const [matchedUniversities, matchedCourseCatalogs, matchedSpecializations] =
+      await Promise.all([
+        University.find({ name: regex }).select("_id"),
+        CourseCatalog.find({ name: regex }).select("_id"),
+        Specialization.find({ name: regex }).select("_id"),
+      ]);
+
     filter.$or = [
       {
         eligibility: {
-          $regex: search,
-          $options: "i",
+          $regex: regex,
         },
       },
       {
         overview: {
-          $regex: search,
-          $options: "i",
+          $regex: regex,
         },
       },
       {
         degreeAwarded: {
-          $regex: search,
-          $options: "i",
+          $regex: regex,
+        },
+      },
+      {
+        studyMode: {
+          $regex: regex,
+        },
+      },
+      {
+        admissionMode: {
+          $regex: regex,
+        },
+      },
+      {
+        university: {
+          $in: matchedUniversities.map((item) => item._id),
+        },
+      },
+      {
+        courseCatalog: {
+          $in: matchedCourseCatalogs.map((item) => item._id),
+        },
+      },
+      {
+        specialization: {
+          $in: matchedSpecializations.map((item) => item._id),
         },
       },
     ];
