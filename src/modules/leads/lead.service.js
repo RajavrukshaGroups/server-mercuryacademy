@@ -160,7 +160,28 @@ const getLeads = async ({
     sortBy,
     sortOrder,
     // populate: ["universityCourse", "country", "state", "city", "assignedTo"],
-    populate: ["universityCourse", "country", "state", "city"],
+    populate: [
+      {
+        path: "universityCourse",
+        populate: [
+          {
+            path: "university",
+            select: "name",
+          },
+          {
+            path: "courseCatalog",
+            select: "name",
+          },
+          {
+            path: "specialization",
+            select: "name",
+          },
+        ],
+      },
+      "country",
+      "state",
+      "city",
+    ],
   });
 };
 
@@ -169,11 +190,26 @@ const getLeads = async ({
  */
 const getLeadById = async (id) => {
   return await baseService.findById(Lead, id, [
-    "universityCourse",
+    {
+      path: "universityCourse",
+      populate: [
+        {
+          path: "university",
+          select: "name",
+        },
+        {
+          path: "courseCatalog",
+          select: "name",
+        },
+        {
+          path: "specialization",
+          select: "name",
+        },
+      ],
+    },
     "country",
     "state",
     "city",
-    // "assignedTo",
   ]);
 };
 

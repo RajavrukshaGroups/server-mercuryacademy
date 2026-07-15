@@ -47,8 +47,7 @@ export const createLeadSchema = z.object({
 
     remarks: z.string().trim().max(5000).optional(),
 
-    assignedTo: objectIdSchema("Assigned User", false),
-
+    assignedTo: z.string().trim().max(100).optional(),
     featured: z.boolean().optional(),
 
     displayOrder: z.number().int().min(0).optional(),
@@ -94,8 +93,7 @@ export const updateLeadSchema = z.object({
 
     remarks: z.string().trim().max(5000).optional(),
 
-    assignedTo: objectIdSchema("Assigned User", false),
-
+    assignedTo: z.string().trim().optional(),
     featured: z.boolean().optional(),
 
     displayOrder: z.number().int().min(0).optional(),
@@ -127,8 +125,7 @@ export const leadQuerySchema = z.object({
 
     leadStatus: z.enum(LEAD_STATUSES).optional(),
 
-    assignedTo: objectIdSchema("Assigned User", false),
-
+    assignedTo: z.string().trim().max(100).optional(),
     status: z.enum(RECORD_STATUS).optional(),
 
     featured: z.coerce.boolean().optional(),

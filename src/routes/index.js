@@ -13,6 +13,7 @@ import universityCourseRoutes from "../modules/university-course/university-cour
 import leadRoutes from "../modules/leads/lead.routes.js";
 import authRoutes from "../modules/auth/auth.routes.js";
 import dashboardRoutes from "../modules/dashboard/dashboard.routes.js";
+import settingsRoutes from "../modules/settings/settings.routes.js";
 
 const router = Router();
 
@@ -35,6 +36,7 @@ router.use("/media", mediaRoutes);
 router.use("/specializations", specializationRoutes);
 router.use("/university-courses", universityCourseRoutes);
 router.use("/leads", leadRoutes);
+router.use("/settings", settingsRoutes);
 router.use("/auth", authRoutes);
 router.use("/dashboard", dashboardRoutes);
 

@@ -69,7 +69,7 @@ const getApprovals = async ({
 };
 
 const getApprovalById = async (id) => {
-  return await baseService.findById(Approval, id);
+  return await baseService.findById(Approval, id, ["logo"]);
 };
 
 const updateApproval = async (id, payload) => {
