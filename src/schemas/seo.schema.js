@@ -10,7 +10,7 @@ const seoSchema = new mongoose.Schema(
     metaTitle: {
       type: String,
       trim: true,
-      maxlength: 70,
+      maxlength: 120,
     },
 
     /**
@@ -19,7 +19,7 @@ const seoSchema = new mongoose.Schema(
     metaDescription: {
       type: String,
       trim: true,
-      maxlength: 160,
+      maxlength: 320,
     },
 
     /**
@@ -55,13 +55,13 @@ const seoSchema = new mongoose.Schema(
     ogTitle: {
       type: String,
       trim: true,
-      maxlength: 70,
+      maxlength: 120,
     },
 
     ogDescription: {
       type: String,
       trim: true,
-      maxlength: 200,
+      maxlength: 320,
     },
 
     /**
@@ -79,13 +79,13 @@ const seoSchema = new mongoose.Schema(
     twitterTitle: {
       type: String,
       trim: true,
-      maxlength: 70,
+      maxlength: 120,
     },
 
     twitterDescription: {
       type: String,
       trim: true,
-      maxlength: 200,
+      maxlength: 320,
     },
 
     twitterImage: {
