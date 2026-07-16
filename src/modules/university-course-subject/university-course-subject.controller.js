@@ -5,7 +5,7 @@ import universityCourseSubjectService from "./university-course-subject.service.
 /**
  * Create
  */
-export const createUniversityCourseSubject = asyncHandler(async (req, res) => {
+const createUniversityCourseSubject = asyncHandler(async (req, res) => {
   const data =
     await universityCourseSubjectService.createUniversityCourseSubject(
       req.body,
@@ -22,7 +22,7 @@ export const createUniversityCourseSubject = asyncHandler(async (req, res) => {
 /**
  * List
  */
-export const getUniversityCourseSubjects = asyncHandler(async (req, res) => {
+const getUniversityCourseSubjects = asyncHandler(async (req, res) => {
   const result =
     await universityCourseSubjectService.getUniversityCourseSubjects(req.query);
 
@@ -37,7 +37,7 @@ export const getUniversityCourseSubjects = asyncHandler(async (req, res) => {
 /**
  * Details
  */
-export const getUniversityCourseSubjectById = asyncHandler(async (req, res) => {
+const getUniversityCourseSubjectById = asyncHandler(async (req, res) => {
   const data =
     await universityCourseSubjectService.getUniversityCourseSubjectById(
       req.params.id,
@@ -54,7 +54,7 @@ export const getUniversityCourseSubjectById = asyncHandler(async (req, res) => {
 /**
  * Update
  */
-export const updateUniversityCourseSubject = asyncHandler(async (req, res) => {
+const updateUniversityCourseSubject = asyncHandler(async (req, res) => {
   const data =
     await universityCourseSubjectService.updateUniversityCourseSubject(
       req.params.id,
@@ -72,7 +72,7 @@ export const updateUniversityCourseSubject = asyncHandler(async (req, res) => {
 /**
  * Delete
  */
-export const deleteUniversityCourseSubject = asyncHandler(async (req, res) => {
+const deleteUniversityCourseSubject = asyncHandler(async (req, res) => {
   await universityCourseSubjectService.deleteUniversityCourseSubject(
     req.params.id,
   );
@@ -83,3 +83,13 @@ export const deleteUniversityCourseSubject = asyncHandler(async (req, res) => {
     message: "University course subject deleted successfully.",
   });
 });
+
+const universityCourseSubjectController = {
+  createUniversityCourseSubject,
+  getUniversityCourseSubjects,
+  getUniversityCourseSubjectById,
+  updateUniversityCourseSubject,
+  deleteUniversityCourseSubject,
+};
+
+export default universityCourseSubjectController;
