@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import slugify from "slugify";
 
 import University from "./university.model.js";
@@ -6,6 +7,23 @@ import Approval from "../approvals/approval.model.js";
 
 import ApiError from "../../utils/ApiError.js";
 import baseService from "../../services/base.service.js";
+
+const universityPopulate = [
+  {
+    path: "approvals",
+    populate: {
+      path: "logo",
+      model: "Media",
+    },
+  },
+  "country",
+  "state",
+  "city",
+  "logo",
+  "banner",
+  "thumbnail",
+  "gallery",
+];
 
 const createUniversity = async (payload) => {
   const normalizedPayload = {
@@ -197,6 +215,46 @@ const getUniversityById = async (id) => {
   ]);
 };
 
+const getUniversityBySlug = async (slug) => {
+  const normalizedSlug = slug.trim().toLowerCase();
+
+  const university = await University.findOne({
+    slug: normalizedSlug,
+    status: "PUBLISHED",
+    isDeleted: false,
+  }).populate(universityPopulate);
+
+  if (!university) {
+    throw new ApiError(404, "University not found.");
+  }
+
+  return university;
+};
+
+const getUniversityByIdentifier = async (identifier) => {
+  const normalizedIdentifier = identifier.trim().toLowerCase();
+
+  const isObjectId =
+    mongoose.Types.ObjectId.isValid(identifier) &&
+    /^[a-f\d]{24}$/i.test(identifier);
+
+  const identifierFilter = isObjectId
+    ? { _id: identifier }
+    : { slug: normalizedIdentifier };
+
+  const university = await University.findOne({
+    ...identifierFilter,
+    status: "PUBLISHED",
+    isDeleted: false,
+  }).populate(universityPopulate);
+
+  if (!university) {
+    throw new ApiError(404, "Published university not found.");
+  }
+
+  return university;
+};
+
 const updateUniversity = async (id, payload) => {
   const university = await baseService.findById(University, id);
 
@@ -276,6 +334,8 @@ const universityService = {
   exportUniversities,
   getUniversities,
   getUniversityById,
+  getUniversityBySlug,
+  getUniversityByIdentifier,
   updateUniversity,
   deleteUniversity,
 };

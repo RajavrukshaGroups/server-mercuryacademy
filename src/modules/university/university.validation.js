@@ -185,3 +185,39 @@ export const universityIdSchema = z.object({
     id: z.string().min(1, "University ID is required."),
   }),
 });
+
+export const universitySlugSchema = z.object({
+  params: z.object({
+    slug: z
+      .string()
+      .trim()
+      .min(1, "University slug is required.")
+      .max(180, "University slug is too long.")
+      .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Invalid university slug."),
+  }),
+});
+
+export const universityIdentifierSchema = z.object({
+  params: z.object({
+    identifier: z
+      .string({
+        required_error: "University identifier is required.",
+      })
+      .trim()
+      .min(1, "University identifier is required.")
+      .max(180, "University identifier cannot exceed 180 characters.")
+      .refine(
+        (value) => {
+          const isObjectId = /^[a-f\d]{24}$/i.test(value);
+
+          const isSlug = /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value);
+
+          return isObjectId || isSlug;
+        },
+        {
+          message:
+            "Identifier must be a valid MongoDB ObjectId or university slug.",
+        },
+      ),
+  }),
+});

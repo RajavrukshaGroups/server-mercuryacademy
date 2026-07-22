@@ -23,6 +23,32 @@ const exportUniversities = asyncHandler(async (req, res) => {
 });
 
 /**
+ * Get Published University By Slug
+ */
+const getUniversityBySlug = asyncHandler(async (req, res) => {
+  const university = await universityService.getUniversityBySlug(
+    req.params.slug,
+  );
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, "University fetched successfully.", university));
+});
+
+/**
+ * Get Published University By ID Or Slug
+ */
+const getUniversityByIdentifier = asyncHandler(async (req, res) => {
+  const university = await universityService.getUniversityByIdentifier(
+    req.params.identifier,
+  );
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, "University fetched successfully.", university));
+});
+
+/**
  * Get All Universities
  */
 const getUniversities = asyncHandler(async (req, res) => {
@@ -80,6 +106,8 @@ const universityController = {
   createUniversity,
   getUniversities,
   exportUniversities,
+  getUniversityBySlug,
+  getUniversityByIdentifier,
   getUniversityById,
   updateUniversity,
   deleteUniversity,
