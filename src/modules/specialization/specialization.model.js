@@ -84,26 +84,30 @@ const specializationSchema = new mongoose.Schema(
 /**
  * Unique Indexes
  */
-specializationSchema.index(
-  { slug: 1 },
-  { unique: true },
-);
-
-specializationSchema.index(
-  { code: 1 },
-  { unique: true },
-);
 
 /**
  * Search & Filter Index
  */
-specializationSchema.index({
-  courseCatalog: 1,
-});
-
-const Specialization = mongoose.model(
-  "Specialization",
-  specializationSchema,
+specializationSchema.index(
+  {
+    courseCatalog: 1,
+    slug: 1,
+  },
+  {
+    unique: true,
+  },
 );
+
+specializationSchema.index(
+  {
+    courseCatalog: 1,
+    code: 1,
+  },
+  {
+    unique: true,
+  },
+);
+
+const Specialization = mongoose.model("Specialization", specializationSchema);
 
 export default Specialization;

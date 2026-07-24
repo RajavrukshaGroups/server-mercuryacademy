@@ -18,6 +18,7 @@ import dashboardRoutes from "../modules/dashboard/dashboard.routes.js";
 import settingsRoutes from "../modules/settings/settings.routes.js";
 import faqRoutes from "../modules/faqs/faq.routes.js";
 import testimonialRoutes from "../modules/testimonials/testimonial.routes.js";
+import publicRoutes from "../modules/public/public.routes.js";
 
 const router = Router();
 
@@ -47,5 +48,6 @@ router.use("/leads", leadRoutes);
 router.use("/settings", settingsRoutes);
 router.use("/auth", authRoutes);
 router.use("/dashboard", dashboardRoutes);
+router.use("/public", publicRoutes);
 
 export default router;

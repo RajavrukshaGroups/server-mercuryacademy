@@ -46,6 +46,21 @@ const universityCourseSchema = new mongoose.Schema(
     },
 
     /**
+     * Public URL slug
+     *
+     * online-mba
+     * online-mba-finance
+     * online-mca-data-science
+     */
+    slug: {
+      type: String,
+      required: true,
+      trim: true,
+      lowercase: true,
+      maxlength: 200,
+    },
+
+    /**
      * Course Duration
      */
     duration: {
@@ -205,19 +220,25 @@ universityCourseSchema.index(
 );
 
 /**
- * Search Filters
+ * Prevent duplicate course/specialization combinations
+ * among non-deleted records.
  */
-universityCourseSchema.index({
-  university: 1,
-});
 
-universityCourseSchema.index({
-  courseCatalog: 1,
-});
-
-universityCourseSchema.index({
-  specialization: 1,
-});
+/**
+ * Slug must be unique within a university.
+ */
+universityCourseSchema.index(
+  {
+    university: 1,
+    slug: 1,
+  },
+  {
+    unique: true,
+    partialFilterExpression: {
+      isDeleted: false,
+    },
+  },
+);
 
 const UniversityCourse = mongoose.model(
   "UniversityCourse",
